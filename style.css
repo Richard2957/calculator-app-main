@@ -1,0 +1,200 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+
+/* Development and debugging only */
+/* 
+body>* {
+    opacity: .8;
+}
+
+body::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    background: url("./design/desktop-design-theme-1.jpg");
+       background-repeat: no-repeat;
+    animation: myflicker ease-in-out alternate  infinite 1s;
+}
+@keyframes myflicker {
+    from {
+        opacity: .2;
+    }
+    to {
+        opacity: .4;
+    }
+}  */
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap');
+
+body{
+min-height: 100vh  ;
+font-family: 'League Spartan', sans-serif;
+font-weight:700;
+display:flex;
+justify-content: center;
+align-items: center;
+background-color:var(--body);
+
+
+}
+ *{
+    transition:background-color 500ms ,color 500ms;
+}
+body{
+    transition:background-color 100ms ,color 100ms; 
+}
+
+.container{
+   width:540px;
+     margin:auto;
+    border:2px red solid;
+}
+
+.topbar{
+    border:2px orange solid;
+    height:90px;
+    display:flex;
+    flex-direction: row;
+    justify-items: flex-start;
+    align-items: center;
+}
+
+.caption {
+  font-size:2em;
+color:var(--writing);
+
+  
+}
+.theme{
+    margin-left:auto;
+    margin-right:20px;
+    color:var(--writing);
+}
+.selector{
+
+width:60px;
+border:red 1px solid;
+
+
+}
+
+.selector>*{
+    border:1px red solid;
+
+}
+
+
+.c123{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color:var(--writing);
+}
+.slider{
+    position:relative;
+    width:100%;
+    border-radius:10px;
+    background-color:var(--switchback);
+    height:20px;
+    cursor: pointer;
+
+}
+.pointer{
+    position:absolute;
+    width:20px;
+    height:20px;
+    top:0;
+    left:0;
+    border-radius: 50%;
+    background-color:var(--pointer);
+    pointer-events: none;
+    transition:transform 300ms ease;
+}
+
+.screen{
+    font-size:3.3em;
+    height:120px;
+ display:flex;
+ align-items:center;
+ justify-content: flex-end;
+ padding-right:30px;
+ background-color: var(--screenback);
+ color:var(--writing);
+   text-align: right;
+   border-radius:6px;
+
+
+}
+
+
+.keybwrap{
+    background-color:var(--switchback);
+    padding:12px 0;
+    margin:22px 0;
+    border-radius: 12px;;
+}
+.keyboard{
+background-color:var(--switchback);
+    margin:1em 25px;;
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+column-gap: 21px;
+row-gap:21px;
+
+}
+
+
+.key{
+    font-size:40px;
+display:flex;
+user-select: none;
+justify-content: center;
+align-items: center;
+padding:12px 0;
+border-radius:10px;
+box-shadow: var(--keybackshad) 0px 2px 0 0;
+background-color: var(--keyback);
+color:var(--keytext);
+transition:transform 200ms ease
+
+}
+
+
+.resetkey{
+    grid-column: 1/3;
+    background-color:var(--delback);
+    box-shadow: var(--delshad) 0 2px ;
+}
+
+.equalskey{
+    grid-column: 3/5;
+    background-color:var(--eqback);
+    box-shadow: var(--eqbackshad) 0 2px;
+}
+.resetkey, .equalskey{
+    font-size: 22px;
+    padding:18px 0;
+}
+
+.delkey{
+    font-size: 22px;
+    background-color: var(--delback);
+    box-shadow: var(--delshad) 0 2px ;;
+}
+
+
+.key:hover{
+  filter:brightness(1.2);
+}
+
+.keyclicked{
+    box-shadow: none;
+    transform:translateY(2px);
+    ;
+}

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Frontend Mentor | Calculator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+      position: absolute;
+      bottom: 20px;
+    }
+
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="container">
+    <div class="topbar">
+      <div class="caption">
+        calc
+      </div>
+      <div class="theme">THEME</div>
+      <div class="selector">
+
+
+        <div class="c123"><div>1</div><div>2</div><div>3</div></div>
+
+        <div class="slider">
+        <div class="pointer"></div>
+      </div>
+      </div>
+
+
+
+    
+  </div>
+  <div class="screen">123456789</div>
+
+
+
+
+<div class="keybwrap">
+  <div class="keyboard">
+    <div class="key n7">7</div>
+    <div class="key n8 keyclicked ">8</div>
+    <div class="key n9">9</div>
+    <div class="key delkey">DEL</div>
+
+    <div class="key n4">4</div>
+    <div class="key n5">5</div>
+    <div class="key n6">6</div>
+    <div class="key pluskey">+</div>
+
+
+    <div class="key n1">1</div>
+    <div class="key n2">2</div>
+    <div class="key n3">3</div>
+    <div class="key minuskey">-</div>
+
+
+    <div class="key dotkey">.</div>
+    <div class="key n0">0</div>
+    <div class="key slashkey">/</div>
+    <div class="key timeskey">x</div>
+
+    <div class="key resetkey">RESET</div>
+    <div class="key equalskey">=</div>
+  </div>
+</div>
+
+  </div>
+
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+    Coded by <a href="#">Your Name Here</a>.
+  </div>
+
+<script>
+const themes=[
+
+{"body":"hsl(222, 26%, 31%)",
+"switchback":"hsl(223, 31%, 20%)",
+"screenback":"hsl(224, 36%, 15%)",
+"delback":"hsl(225, 21%, 49%)",
+"delshad":"hsl(224, 28%, 35%)",
+"eqback":"hsl(6, 63%, 50%)",
+"eqbackshad":"hsl(6, 70%, 34%)",
+"keyback":"hsl(30, 25%, 89%)",
+"keybackshad":"hsl(28, 16%, 65%)",
+"writing":"white",
+"pointer":"hsl(6, 63%, 50%)",
+"keytext":"hsl(221, 14%, 31%)",}
+,
+{"body":"hsl(0, 0%, 90%)",
+"switchback":"hsl(0, 5%, 81%)",
+"screenback":"hsl(0, 0%, 93%)",
+"delback":"hsl(185, 42%, 37%)",
+"delshad":"hsl(185, 58%, 25%)",
+"eqback":"hsl(25, 98%, 40%)",
+"eqshadow":"hsl(25, 99%, 27%)",
+"keyback":"hsl(45, 7%, 89%)",
+"keybackshadow":"hsl(35, 11%, 61%)",
+"writing":"hsl(60, 10%, 19%)",
+"keytext":"hsl(60, 10%, 19%)",}
+,
+{"body":"hsl(268, 75%, 9%)",
+"switchback":"hsl(268, 71%, 12%)",
+"screenback":" hsl(268, 71%, 12%)",
+"delback":"hsl(281, 89%, 26%)",
+"delshad":"hsl(285, 91%, 52%)",
+"eqback":"hsl(176, 100%, 44%)",
+"eqshadow":"hsl(177, 92%, 70%)",
+"keyback":"hsl(268, 47%, 21%)",
+"keybackshadow":"hsl(290, 70%, 36%)",
+"keytext":"hsl(52, 100%, 62%)",
+"writing":"hsl(52, 100%, 62%)"}
+]
+let currentTheme=1;
+
+const setTheme=()=>{
+const sliderWidth=document.querySelector(".slider").clientWidth;
+const s="translateX("+ ((currentTheme-1) * (sliderWidth)/3) +"px)";
+
+document.querySelector(".pointer").style.transform=s;
+const body=document.querySelector("body");
+
+console.log ("just checking")
+console.log(themes[currentTheme-1])
+console.log("ok")
+
+
+for (const prop in themes[currentTheme-1])  {
+  body.style.setProperty("--"+prop,  themes[currentTheme-1][prop])
+  console.log("123", prop, themes[currentTheme-1][prop])
+}
+
+
+
+}
+document.querySelector(".slider").addEventListener("click",e=>{
+//console.log(e.offsetX);
+
+const newTheme=1+Math.min(3, Math.floor(3*(e.offsetX/e.target.clientWidth)));
+if (newTheme!==currentTheme){
+  currentTheme=newTheme;
+  setTheme();
+}
+})
+
+setTheme(1);
+
+
+const allKeys=[...document.querySelectorAll(".key")];
+allKeys.forEach(e=>e.addEventListener("click",(el=>{
+
+console.dir(el)
+
+
+})))     
+
+
+allKeys.forEach(key=>key.addEventListener("mouseDown",(el)=>{el.target.classList.add("keyclicked")}))
+
+
+</script> 
+
+
+
+
+
+</body>
+
+</html>
