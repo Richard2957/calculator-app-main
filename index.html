@@ -48,7 +48,7 @@
 
     
   </div>
-  <div class="screen">123456789</div>
+  <div class="screen"></div>
 
 
 
@@ -139,21 +139,13 @@ const s="translateX("+ ((currentTheme-1) * (sliderWidth)/3) +"px)";
 document.querySelector(".pointer").style.transform=s;
 const body=document.querySelector("body");
 
-console.log ("just checking")
-console.log(themes[currentTheme-1])
-console.log("ok")
-
-
 for (const prop in themes[currentTheme-1])  {
   body.style.setProperty("--"+prop,  themes[currentTheme-1][prop])
-  console.log("123", prop, themes[currentTheme-1][prop])
+
 }
-
-
 
 }
 document.querySelector(".slider").addEventListener("click",e=>{
-//console.log(e.offsetX);
 
 const newTheme=1+Math.min(3, Math.floor(3*(e.offsetX/e.target.clientWidth)));
 if (newTheme!==currentTheme){
@@ -165,17 +157,144 @@ if (newTheme!==currentTheme){
 setTheme(1);
 
 
-const allKeys=[...document.querySelectorAll(".key")];
-allKeys.forEach(e=>e.addEventListener("click",(el=>{
+const screenBuffer=[];
+const storeBuffer=[];
+let currentOperand=null;
+let nextkeyResetsScreen=false;
+displayScreenBuffer();
 
-console.dir(el)
+function copyScreenBuffertoStoreBuffer(){
+storeBuffer.length=0;
+screenBuffer.forEach(x=>storeBuffer.push(x))
+}
+function doSums(){
+  let result;
+  const n1=  Number(screenBuffer.join(''));
+const n2=  Number(storeBuffer.join(''));
+switch (currentOperand){
+case "+":result=n1+n2; break;
+case "-":result=n2-n1; break;
+case "x":result=n1*n2; break;
+case "/":result=n2/n1; break;
+}
+return result;
+
+}
+
+function processFunctionKey(co){
+  if (currentOperand){
+  const result= doSums();
+const resultAr=result.toString().split('');
+screenBuffer.length=0;
+resultAr.forEach(x=>screenBuffer.push(x));
+}
+copyScreenBuffertoStoreBuffer();
+currentOperand=co;
+nextkeyResetsScreen=true;
+
+
+
+}
+function processKey(x){
+
+switch(x){
+
+
+
+case "RESET":
+screenBuffer.length=0;
+storeBuffer.length=0;
+currentOperand=null;
+break;
+
+case "DEL":
+if (!screenBuffer) break;
+screenBuffer.pop();
+break;
+
+case "=":
+if(!currentOperand) break;
+const result= doSums();
+const resultAr=result.toString().split('');
+screenBuffer.length=0;
+resultAr.forEach(x=>screenBuffer.push(x));
+storeBuffer.length=0;
+currentOperand=null;
+nextkeyResetsScreen=true;
+
+break;
+
+case "+": 
+processFunctionKey("+");
+break;
+
+
+
+case "-": 
+processFunctionKey("-");
+break;
+case "x": 
+processFunctionKey("x");
+break;
+
+case "/": 
+processFunctionKey("/");
+break;
+case ".": 
+if (screenBuffer.includes(".")) break;
+if(nextkeyResetsScreen){
+  screenBuffer.length=0;
+nextkeyResetsScreen=false;}
+screenBuffer.push(x);
+break;
+
+
+
+
+default: // 0-9
+
+if(nextkeyResetsScreen){
+  screenBuffer.length=0;
+nextkeyResetsScreen=false;}
+screenBuffer.push(x);
+
+break;
+
+}
+
+
+displayScreenBuffer();
+
+}
+
+
+function displayScreenBuffer(){
+  let s=screenBuffer.reduce((tot,val)=>tot+val,"")
+if (!s) s="0.";
+if (!s.includes("."))s+=".";
+
+  document.querySelector(".screen").innerHTML=s;
+}
+
+
+
+
+
+const allKeys=[...document.querySelectorAll(".key")];
+allKeys.forEach(key=>key.addEventListener("click",(el=>{
+processKey(key.innerHTML);
+
 
 
 })))     
 
-
-allKeys.forEach(key=>key.addEventListener("mouseDown",(el)=>{el.target.classList.add("keyclicked")}))
-
+// Mousedown/up key handlers
+allKeys.forEach(key=>key.addEventListener("mousedown",(el)=>{
+  key.classList.add("keyclicked")
+}))
+allKeys.forEach(key=>key.addEventListener("mouseup",(el)=>{
+  key.classList.remove("keyclicked")
+}))
 
 </script> 
 
