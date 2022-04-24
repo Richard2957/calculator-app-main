@@ -119,6 +119,7 @@ width:60px;
  color:var(--writing);
    text-align: right;
    border-radius:6px;
+   overflow: hidden;
 
 
 }
